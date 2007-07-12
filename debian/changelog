@@ -1,3 +1,10 @@
+base-passwd (3.5.10.slind4) unstable; urgency=low
+
+  * Update section field to 'core'.
+  * Change maintainer email.
+
+ -- Alexander Shishkin <virtuoso@slind.org>  Thu, 12 Jul 2007 13:49:39 +0400
+
 base-passwd (3.5.10.slind3) testing; urgency=low
 
   * Testing prerelease.

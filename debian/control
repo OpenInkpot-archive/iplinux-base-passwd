@@ -1,7 +1,8 @@
 Source: base-passwd
-Section: base
+Section: core
 Priority: required
-Maintainer: Vartan Khachaturov <vartan.khachaturov@siemens.com>
+Maintainer: Vartan Khachaturov <wart@slind.org>
+XCS-Cross-Build-Depends: cross-toolchain
 Standards-Version: 3.6.0
 
 Package: base-passwd
