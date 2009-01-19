@@ -26,7 +26,7 @@ CFLAGS := -g -Wall
 endif
 
 Makefile: Makefile.in configure.in
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) \
+	CC="$(DEB_HOST_GNU_TYPE)-gcc" CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) \
 		--build=$(DEB_BUILD_GNU_TYPE)
 
 .PHONY: binary
