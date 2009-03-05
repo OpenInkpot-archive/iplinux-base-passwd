@@ -1,3 +1,9 @@
+base-passwd (3.5.20.ip1) asimov; urgency=low
+
+  * Build for IPlinux.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 05 Mar 2009 18:30:03 +0600
+
 base-passwd (3.5.20) unstable; urgency=medium
 
   * Document that the staff group is typically root-equivalent (thanks, Guy

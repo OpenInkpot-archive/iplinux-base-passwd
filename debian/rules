@@ -2,7 +2,6 @@
 
 # Debian package information
 package		= base-passwd
-docdir		= /usr/share/doc/$(package)
 tmpdir		= $(shell pwd)/debian/tmp
 
 # Other stuff
@@ -20,8 +19,6 @@ endif
 .PHONY: all build
 all build: Makefile
 	$(MAKE) 
-	$(MAKE) -C doc
-	$(MAKE) -C man
 
 .PHONY: clean
 clean:
@@ -29,8 +26,6 @@ clean:
 	$(MAKE) -C man update
 
 	-$(MAKE) mrproper
-	$(MAKE) -C doc clean
-	$(MAKE) -C man clean
 	rm -rf debian/tmp debian/files debian/substvars
 
 ifeq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
@@ -62,51 +57,14 @@ ifeq (,$(filter nostrip,$(DEB_BUILD_OPTIONS)))
 		--remove-section=.note debian/tmp/usr/sbin/update-passwd
 endif
 
-	install -d -m 755 -o root -g root \
-		debian/tmp/usr/share/man/man8 \
-		debian/tmp/usr/share/man/fr/man8 \
-		debian/tmp/usr/share/man/pl/man8 \
-		debian/tmp/usr/share/man/ru/man8
-	install -p -m 644 -o root -g root man/update-passwd.8 \
-		debian/tmp/usr/share/man/man8/
-	install -p -m 644 -o root -g root man/update-passwd.fr.8 \
-		debian/tmp/usr/share/man/fr/man8/update-passwd.8
-	install -p -m 644 -o root -g root man/update-passwd.pl.8 \
-		debian/tmp/usr/share/man/pl/man8/update-passwd.8
-	install -p -m 644 -o root -g root man/update-passwd.ru.8 \
-		debian/tmp/usr/share/man/ru/man8/update-passwd.8
-	gzip -9 debian/tmp/usr/share/man/man8/* \
-		debian/tmp/usr/share/man/fr/man8/* \
-		debian/tmp/usr/share/man/pl/man8/* \
-		debian/tmp/usr/share/man/ru/man8/*
-
 	install -d -m 755 -o root -g root debian/tmp/usr/share/base-passwd
 	install -p -m 644 -o root -g root passwd.master \
 		debian/tmp/usr/share/base-passwd/
 	install -p -m 644 -o root -g root group.master \
 		debian/tmp/usr/share/base-passwd/
 
-	install -d -m 755 -o root -g root debian/tmp$(docdir)
-	install -p -m 644 -o root -g root debian/changelog debian/tmp$(docdir)/
-	gzip -9 debian/tmp$(docdir)/*
-	install -p -m 644 -o root -g root README debian/tmp$(docdir)/
-	install -p -m 644 -o root -g root debian/copyright debian/tmp$(docdir)/
-	install -p -m 644 -o root -g root \
-		doc/users-and-groups.html doc/users-and-groups.txt \
-		debian/tmp$(docdir)/
-	gzip -9 debian/tmp$(docdir)/users-and-groups.txt
-
-	install -d -m 755 -o root -g root debian/tmp/usr/share/doc-base
-	install -p -m 644 -o root -g root debian/doc-base \
-		debian/tmp/usr/share/doc-base/users-and-groups
-
-	install -d -m 755 -o root -g root debian/tmp/usr/share/lintian/overrides
-	install -p -m 644 -o root -g root debian/lintian \
-		debian/tmp/usr/share/lintian/overrides/base-passwd
-
 	install -d -m 755 -o root -g root debian/tmp/DEBIAN
 	install -p -m 755 -o root -g root debian/postinst debian/tmp/DEBIAN/
-	install -p -m 755 -o root -g root debian/prerm debian/tmp/DEBIAN/
 
 	dpkg-shlibdeps -dPre-Depends debian/tmp/usr/sbin/update-passwd
 	dpkg-gencontrol -isp

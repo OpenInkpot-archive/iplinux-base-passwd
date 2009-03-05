@@ -1,18 +1,15 @@
 Source: base-passwd
-Section: admin
+Section: core
 Priority: required
-Maintainer: Colin Watson <cjwatson@debian.org>
-Standards-Version: 3.6.0
-Build-Depends: sgmltools-lite, w3m, po4a
-Vcs-Bzr: http://bzr.debian.org/users/cjwatson/base-passwd/trunk
+Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
+Standards-Version: 3.8.0
+Build-Depends:
 
 Package: base-passwd
 Architecture: any
 Depends: ${shlibs:Pre-Depends}
-Essential: yes
-Replaces: base
-Description: Debian base system master password and group files
+Description: IPlinux base system master password and group files
  These are the canonical master copies of the user database files
- (/etc/passwd and /etc/group), containing the Debian-allocated user and
+ (/etc/passwd and /etc/group), containing the IPlinux-allocated user and
  group IDs. The update-passwd tool is provided to keep the system databases
  synchronized with these master files.
