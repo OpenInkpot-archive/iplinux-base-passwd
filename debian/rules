@@ -7,57 +7,26 @@ tmpdir		= $(shell pwd)/debian/tmp
 # Other stuff
 SHELL		= /bin/bash
 
-DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
-DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
-
-ifeq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
-  confflags += --build=$(DEB_HOST_GNU_TYPE)
-else
-  confflags += --build=$(DEB_BUILD_GNU_TYPE) --host=$(DEB_HOST_GNU_TYPE)
-endif
-
 .PHONY: all build
-all build: Makefile
-	$(MAKE) 
+all build:
 
 .PHONY: clean
 clean:
-	# make sure the POT and POs are up to date
-	$(MAKE) -C man update
-
-	-$(MAKE) mrproper
 	rm -rf debian/tmp debian/files debian/substvars
-
-ifeq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
-CFLAGS := -g -O2 -Wall
-else
-CFLAGS := -g -Wall
-endif
-
-Makefile: Makefile.in configure.ac
-	CFLAGS="$(CFLAGS)" ./configure $(confflags)
 
 .PHONY: binary
 binary: binary-arch binary-indep
 
-.PHONY: binary-indep
-binary-indep:
+.PHONY: binary-arch
+binary-arch:
 	@echo Nothing to do
 
-.PHONY: binary-arch
-binary-arch: build
+.PHONY: binary-indep
+binary-indep: build
 	test "`id -u`" -eq 0
 	-rm -rf debian/tmp debian/files debian/substvars
 
-	install -d -m 755 -o root -g root debian/tmp/usr/sbin
-	install -p -m 755 -o root -g root update-passwd debian/tmp/usr/sbin/
-
-ifeq (,$(filter nostrip,$(DEB_BUILD_OPTIONS)))
-	strip --strip-unneeded --remove-section=.comment \
-		--remove-section=.note debian/tmp/usr/sbin/update-passwd
-endif
-
-	install -d -m 755 -o root -g root debian/tmp/usr/share/base-passwd
+	mkdir -p debian/tmp/usr/share/base-passwd
 	install -p -m 644 -o root -g root passwd.master \
 		debian/tmp/usr/share/base-passwd/
 	install -p -m 644 -o root -g root group.master \
@@ -66,7 +35,6 @@ endif
 	install -d -m 755 -o root -g root debian/tmp/DEBIAN
 	install -p -m 755 -o root -g root debian/postinst debian/tmp/DEBIAN/
 
-	dpkg-shlibdeps -dPre-Depends debian/tmp/usr/sbin/update-passwd
 	dpkg-gencontrol -isp
 	(cd debian/tmp && \
 		find . -name DEBIAN -prune -o -type f -printf '%P\0' | \

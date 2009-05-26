@@ -1,3 +1,9 @@
+base-passwd (3.5.20.ip2) asimov; urgency=low
+
+  * Simplified for IPlinux requirements.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Wed, 27 May 2009 01:30:03 +0700
+
 base-passwd (3.5.20.ip1) asimov; urgency=low
 
   * Build for IPlinux.

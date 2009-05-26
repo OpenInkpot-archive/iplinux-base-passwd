@@ -14,6 +14,4 @@ if [ ! -e /etc/group ] ; then
 	cp /usr/share/base-passwd/group.master /etc/group
 fi
 
-update-passwd --verbose
-
 exit 0
