@@ -1,3 +1,9 @@
+base-passwd (3.5.20.ip3) asimov; urgency=low
+
+  * Several grops temporarily added back, until base-files is fixed.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Wed, 27 May 2009 01:51:42 +0700
+
 base-passwd (3.5.20.ip2) asimov; urgency=low
 
   * Simplified for IPlinux requirements.
