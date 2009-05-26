@@ -1,3 +1,7 @@
 root:*:0:
+tty:*:5:
+mail:*:8:
+utmp:*:43:
+staff:*:50:
 users:*:100:
 nogroup:*:65534:
